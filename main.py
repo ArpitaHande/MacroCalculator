@@ -20,7 +20,7 @@ def Load_Data():
         
     return df
 
-Load_Data()
+df=Load_Data()
 
 # User_Inputs
 st.sidebar.header("👤 Your Profile")
@@ -53,4 +53,29 @@ def calculate_macros(weight, height, age, gender, goal):
     
     return round(tdee ,3), round(carbs,3), round(protein,3), round(fats,3)
 
-calories, carbs, protein, facts = calculate_macros(weight, height, age, gender, goal)
+calories, carbs, protein, fats = calculate_macros(weight, height, age, gender, goal)
+
+#Display Results
+st.title("🥗Macro Calculator and Indian Food Suggester")
+st.write(f"### Your Daily Target: **{calories} kcal**")
+
+col1, col2, col3 = st.columns(3)
+col1.metric("Carbs", f"{carbs}g")
+col2.metric("Protein", f"{protein}g")
+col3.metric("Fats", f"{fats}g")
+
+# Food Recommendation Logic
+st.divider()
+st.subheader("🍲 Recommended Indian Dishes for You")
+st.write("Based on your protein and calorie needs:")
+
+# Filter dishes that are within a reasonable range per 100g
+# High protein filter for those gaining weight, low calorie for loss
+if goal == "Weight Loss":
+    recommendations = df[df['Calories'] < 150].sort_values(by='Protein', ascending=False)
+else:
+    recommendations = df.sort_values(by='Protein', ascending=False)
+
+# Display top 10 matches
+st.dataframe(recommendations[['Dish', 'Calories', 'Protein', 'Carbs', 'Fats']].head(10))
+
