@@ -30,6 +30,7 @@ weight = st.sidebar.slider("Weight (kg)", 30, 200, 70)
 height = st.sidebar.slider("Height (cm)", 100, 250, 170)
 goal = st.sidebar.selectbox("Goal", ["Weight Loss", "Maintain", "Weight Gain"])
 
+
 #Macro Calculation Logic
 def calculate_macros(weight, height, age, gender, goal):
     # Calculate BMR
@@ -51,7 +52,7 @@ def calculate_macros(weight, height, age, gender, goal):
     protein = (tdee * 0.25) / 4
     fats = (tdee * 0.25) / 9
     
-    return round(tdee ,3), round(carbs,3), round(protein,3), round(fats,3) ,weight
+    return round(tdee ,3), round(carbs,3), round(protein,3), round(fats,3)
 
 calories, carbs, protein, fats = calculate_macros(weight, height, age, gender, goal)
 
