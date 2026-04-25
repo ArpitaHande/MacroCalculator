@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import random
-#kaggle dataset
 #Load kaggle dataset 
+st.set_page_config(layout="wide")
 @st.cache_data
 def Load_Data():
     df=pd.read_csv("Indian_Food_Nutrition_Processed.csv")
@@ -24,15 +24,42 @@ def Load_Data():
 df=Load_Data()
 
 # User_Inputs
-st.sidebar.header("👤 Your Profile")
+st.sidebar.image("https://images.pexels.com/photos/7462811/pexels-photo-7462811.jpeg",width=500)
+header=st.sidebar.subheader("YOU PROFILE")
 age = st.sidebar.slider("Age", min_value=10, max_value=100, value=25)
 gender = st.sidebar.selectbox("Gender", ["Male", "Female"])
 weight = st.sidebar.slider("Weight (kg)", 30, 150, 50)
 height = st.sidebar.slider("Height (cm)", 100, 200, 170)
 activity = st.sidebar.selectbox("Activity Level", ["Sedentary", "Light", "Moderate" , "Active"])
 goal = st.sidebar.selectbox("Goal", ["Weight Loss", "Maintain", "Weight Gain"])
+if st.sidebar.button("Generate Plan"):
+    st.sidebar.success("Plan Ready!")
+    st.sidebar.snow()
+with st.sidebar.expander("ABOUT PROJECT"):
+    st.write("""
+We are a team of students working on a mini project focused on building a smart and user-friendly nutrition tool. Our application, the Macro Calculator and Indian Food Suggester, is designed to help users understand their daily nutritional needs and make better food choices based on Indian cuisine.
 
+This project combines health awareness with simple technology, making it easier for users to calculate their daily calorie requirements and get suitable food recommendations.
+    """)
+with st.sidebar.expander("ABOUT THE TEAM"):
+    st.write("""
+Team Contributions:
 
+             
+Aditi Lakhe – Development and core functionality
+             
+Tanishka Bodke – User Interface design and layout
+             
+Arpita Hande – Documentation
+             
+Gargee Bhatkhande – Documentation
+
+""")
+with st.sidebar.expander("GOAL OF THE PROJECT"):
+    st.write("""To create an accessible and practical tool that promotes healthier eating habits in a simple and intuitive way.
+
+This mini project reflects our collaborative effort, where each member contributed their skills to build a complete and meaningful application.
+""")
 
 #Macro Calculation Logic
 def calculate_macros(weight, height, age, gender, goal):
@@ -62,17 +89,25 @@ def calculate_macros(weight, height, age, gender, goal):
 calories, carbs, protein, fats = calculate_macros(weight, height, age, gender, goal)
 
 #Display Results
-st.title("🥗Macro Calculator and Indian Food Suggester")
-st.write(f"### Your Daily Target: **{calories} kcal**")
+st.title("MACRO CALCULATOR AND INDIAN FOOD SUGGESTER")
+st.subheader(f"YOUR DAILY TARGET::{calories}KCAL")
+#st.write(f"### Your Daily Target: **{calories} kcal**")
 
 col1, col2, col3 = st.columns(3)
 col1.metric("Carbs", f"{carbs}g")
 col2.metric("Protein", f"{protein}g")
 col3.metric("Fats", f"{fats}g")
+col4,col5,col6=st.columns(3)
+with col4:
+    st.image("https://images.pexels.com/photos/37199356/pexels-photo-37199356.jpeg",width=700)
+with col5:
+    st.image("https://images.pexels.com/photos/7646673/pexels-photo-7646673.jpeg",width=700)
+with col6:
+    st.image("https://images.pexels.com/photos/19964370/pexels-photo-19964370.jpeg",width=700)
 
 # Food Recommendation Logic
 st.divider()
-st.subheader("🍲 Recommended Indian Dishes for You")
+st.subheader(" Recommended Indian Dishes for You")
 st.write("Based on your protein and calorie needs:")
 
 
